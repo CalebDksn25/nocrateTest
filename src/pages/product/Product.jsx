@@ -25,11 +25,24 @@ const Product = () => {
       return;
     }
     try {
-      const updatedCart = await addToCart(cartId, selectedVariant, 1);
-      console.log("Updated Cart:", updatedCart); // Debug log
-      updateCart(updatedCart); // Update the cart state
+      // Ensure the variant ID is the full Shopify variant ID
+      const fullVariantId = product.variants.find(
+        (variant) => variant.id === selectedVariant
+      )?.id;
+
+      if (!fullVariantId) {
+        console.error("Variant not found");
+        return;
+      }
+
+      const updatedCart = await addToCart(cartId, fullVariantId, 1);
+      if (updatedCart) {
+        updateCart(); // Use the updateCart from context
+        console.log("Product added to cart successfully");
+      }
     } catch (error) {
       console.error("Error adding to cart:", error);
+      alert("Failed to add product to cart. Please try again.");
     }
   };
 
