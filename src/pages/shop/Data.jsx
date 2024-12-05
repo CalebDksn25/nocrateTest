@@ -13,12 +13,12 @@ export const productData = [
     description:
       "Inspired by one of our favorite vintage tees in the vault. Timeless and elegant double screen on our single stitch, raw hem cut, black tee. Please note, distressing throughout. Wash cold and hang dry.",
     image: lexyTee, // Referencing the imported asset
-    price: 50,
+    price: "50",
     variants: [
-      { id: "variant1", size: "S" },
-      { id: "variant2", size: "M" },
-      { id: "variant3", size: "L" },
-      { id: "variant4", size: "XL" },
+      { id: "42334850383974", size: "S" },
+      { id: "42334850416742", size: "M" },
+      { id: "42334850449510", size: "L" },
+      { id: "42334850482278", size: "XL" },
     ],
   },
   {
@@ -27,12 +27,12 @@ export const productData = [
     description:
       "Our take on the perfect vintage white tee, crafted from 100% cotton. Minimal distressing around the sleeve edges and collar gives it that authentic worn-in look. Raw hem cut at the bottom for the ideal crop at the waist. Hand screen-printed and designed to fade beautifully, this tee is a staple.",
     image: whitePunkTee,
-    price: 50,
+    price: "50",
     variants: [
-      { id: "variant5", size: "S" },
-      { id: "variant6", size: "M" },
-      { id: "variant7", size: "L" },
-      { id: "variant8", size: "XL" },
+      { id: "42334884200550", size: "S" },
+      { id: "42334884233318", size: "M" },
+      { id: "42334884266086", size: "L" },
+      { id: "42334884298854", size: "XL" },
     ],
   },
   {
@@ -41,12 +41,12 @@ export const productData = [
     description:
       "100% French terry cotton. Wash on cold and air dry. Our hoodies are intentionally distressed to achieve a true vintage look. Variations in distressing, such as frayed edges or faded areas, are part of the design and add to the unique character of each piece. These features are not defects but are intentional elements that contribute to the overall style of the hoodie.",
     image: nocrateHoodie,
-    price: 150,
+    price: "150",
     variants: [
-      { id: "variant9", size: "S" },
-      { id: "variant10", size: "M" },
-      { id: "variant11", size: "L" },
-      { id: "variant12", size: "XL" },
+      { id: "42334884462694", size: "S" },
+      { id: "42334884495462", size: "M" },
+      { id: "42334884528230", size: "L" },
+      { id: "42334884560998", size: "XL" },
     ],
   },
   {
@@ -55,12 +55,12 @@ export const productData = [
     description:
       "Our hoodies are intentionally distressed to achieve a true vintage look. Variations in distressing, such as frayed edges or faded areas, are part of the design and add to the unique character of each piece. These features are not defects but are intentional elements that contribute to the overall style of the hoodie.",
     image: blackHoodie,
-    price: 150,
+    price: "150",
     variants: [
-      { id: "variant13", size: "S" },
-      { id: "variant14", size: "M" },
-      { id: "variant15", size: "L" },
-      { id: "variant16", size: "XL" },
+      { id: "42334884626534", size: "S" },
+      { id: "42334884659302", size: "M" },
+      { id: "42334884692070", size: "L" },
+      { id: "42334884724838", size: "XL" },
     ],
   },
   {
@@ -69,12 +69,12 @@ export const productData = [
     description:
       "Our take on the perfect vintage white tee, crafted from 100% cotton. Minimal distressing around the sleeve edges and collar gives it that authentic worn-in look. Raw hem cut at the bottom for the ideal crop at the waist. Hand screen-printed and designed to fade beautifully, this tee is a staple.",
     image: classicTee,
-    price: 50,
+    price: "50",
     variants: [
-      { id: "variant17", size: "S" },
-      { id: "variant18", size: "M" },
-      { id: "variant19", size: "L" },
-      { id: "variant20", size: "XL" },
+      { id: "42334884954214", size: "S" },
+      { id: "42334884986982", size: "M" },
+      { id: "42334885019750", size: "L" },
+      { id: "42334885052518", size: "XL" },
     ],
   },
 ];

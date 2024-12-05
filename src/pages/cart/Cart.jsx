@@ -1,45 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { fetchCart } from "../../utils/shopifyAPI";
+import React, { useContext, useEffect } from "react";
+import { CartContext } from "/Users/calebdickson/Desktop/noreact/main/src/utils/CartContext.js";
 import "./cart.css";
 
-const Cart = ({ cartId }) => {
-  const [cartItems, setCartItems] = useState([]);
+const Cart = () => {
+  const { cartItems, updateCart, checkoutUrl } = useContext(CartContext);
 
   useEffect(() => {
-    const loadCart = async () => {
-      try {
-        const items = await fetchCart(cartId);
-        setCartItems(items);
-      } catch (error) {
-        console.error("Failed to fetch cart items:", error);
-      }
-    };
-    loadCart();
-  }, [cartId]);
+    updateCart();
+  }, [updateCart]);
 
-  const proceedToCheckout = () => {
-    window.location.href = "https://your-shopify-checkout-url.com"; // Replace with actual checkout URL
+  const handleCheckout = () => {
+    window.location.href = checkoutUrl; // Redirect to Shopify checkout
   };
 
   return (
     <div className="cart-container">
       <h2>Your Cart</h2>
-      <div className="cart-items">
-        {cartItems.length === 0 ? (
-          <p>No items in cart</p>
-        ) : (
-          cartItems.map(({ node }) => (
-            <div key={node.id} className="cart-item">
-              <h4>{node.merchandise.product.title}</h4>
-              <p>Variant: {node.merchandise.title}</p>
-              <p>Price: ${node.merchandise.price.amount}</p>
-              <p>Quantity: {node.quantity}</p>
-            </div>
-          ))
-        )}
-      </div>
+      {cartItems.length === 0 ? (
+        <p>Your cart is empty.</p>
+      ) : (
+        cartItems.map((item) => (
+          <div key={item.id} className="cart-item">
+            <p>
+              <strong>{item.title}</strong>
+            </p>
+            <p>Quantity: {item.quantity}</p>
+            <p>Price: ${item.price}</p>
+          </div>
+        ))
+      )}
       <div className="cart-actions">
-        <button onClick={proceedToCheckout}>Proceed to Checkout</button>
+        <button onClick={handleCheckout}>Checkout</button>{" "}
+        {/* Add Checkout button */}
       </div>
     </div>
   );

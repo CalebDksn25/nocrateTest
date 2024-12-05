@@ -1,17 +1,18 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom"; // Replace useHistory with useNavigate
-import { productData } from "./Data.jsx"; // Importing from Data.jsx
+import { Link, useNavigate } from "react-router-dom";
+import { productData } from "./Data.jsx"; // Your local data
 import "./shop.css";
 
 const Shop = () => {
-  const navigate = useNavigate(); // Replace useHistory with useNavigate
+  const navigate = useNavigate();
 
   const handleImageClick = (id) => {
-    navigate(`/product/${id}`); // Replace history.push with navigate
+    navigate(`/product/${id}`);
   };
 
-  const handleViewProductClick = (id) => {
-    navigate(`/product/${id}`); // Navigate to product page
+  const handleBuyNowClick = (id) => {
+    navigate(`/product/${id}`); // Navigate to product page for now
+    // You can add logic here to directly add the product to the cart and navigate to checkout
   };
 
   return (
@@ -24,16 +25,20 @@ const Shop = () => {
               src={product.image}
               alt={product.name}
               className="product-image"
-              onClick={() => handleImageClick(product.id)}
+              onClick={() => handleImageClick(product.id)} // Add onClick handler
             />
             <h2>{product.name}</h2>
             <p>${product.price}</p>
             <div className="button-container">
-              <button className="button-now">Buy Now</button>
-              <button
-                className="button-now"
-                onClick={() => handleViewProductClick(product.id)}>
+              <Link
+                to={`/product/${product.id}`}
+                className="view-product-button">
                 View Product
+              </Link>
+              <button
+                className="view-product-button"
+                onClick={() => handleBuyNowClick(product.id)}>
+                Buy Now
               </button>
             </div>
           </div>

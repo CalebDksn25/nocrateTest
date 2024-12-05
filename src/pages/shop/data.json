@@ -6,10 +6,10 @@
     "image": "/assets/tee1.png",
     "price": "50",
     "variants": [
-      { "id": "variant1", "size": "S" },
-      { "id": "variant2", "size": "M" },
-      { "id": "variant3", "size": "L" },
-      { "id": "variant4", "size": "XL" }
+      { "id": "42334850383974", "size": "S" },
+      { "id": "42334850416742", "size": "M" },
+      { "id": "42334850449510", "size": "L" },
+      { "id": "42334850482278", "size": "XL" }
     ]
   },
   {
@@ -19,10 +19,10 @@
     "image": "/assets/tee2.png",
     "price": "50",
     "variants": [
-      { "id": "variant5", "size": "S" },
-      { "id": "variant6", "size": "M" },
-      { "id": "variant7", "size": "L" },
-      { "id": "variant8", "size": "XL" }
+      { "id": "42334884200550", "size": "S" },
+      { "id": "42334884233318", "size": "M" },
+      { "id": "42334884266086", "size": "L" },
+      { "id": "42334884298854", "size": "XL" }
     ]
   },
   {
@@ -32,10 +32,10 @@
     "image": "/assets/tee3.png",
     "price": "150",
     "variants": [
-      { "id": "variant9", "size": "S" },
-      { "id": "variant10", "size": "M" },
-      { "id": "variant11", "size": "L" },
-      { "id": "variant12", "size": "XL" }
+      { "id": "42334884462694", "size": "S" },
+      { "id": "42334884495462", "size": "M" },
+      { "id": "42334884528230", "size": "L" },
+      { "id": "42334884560998", "size": "XL" }
     ]
   },
   {
@@ -45,10 +45,10 @@
     "image": "/assets/tee4.png",
     "price": "150",
     "variants": [
-      { "id": "variant13", "size": "S" },
-      { "id": "variant14", "size": "M" },
-      { "id": "variant15", "size": "L" },
-      { "id": "variant16", "size": "XL" }
+      { "id": "42334884626534", "size": "S" },
+      { "id": "42334884659302", "size": "M" },
+      { "id": "42334884692070", "size": "L" },
+      { "id": "42334884724838", "size": "XL" }
     ]
   },
   {
@@ -58,10 +58,10 @@
     "image": "/assets/tee5.png",
     "price": "50",
     "variants": [
-      { "id": "variant17", "size": "S" },
-      { "id": "variant18", "size": "M" },
-      { "id": "variant19", "size": "L" },
-      { "id": "variant20", "size": "XL" }
+      { "id": "42334884954214", "size": "S" },
+      { "id": "42334884986982", "size": "M" },
+      { "id": "42334885019750", "size": "L" },
+      { "id": "42334885052518", "size": "XL" }
     ]
   }
 ]

@@ -9,30 +9,34 @@ import Header from "./components/header/Header";
 import Product from "./pages/product/Product";
 import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
-import Cart from "./pages/cart/Cart"; // Import Cart component
+import Cart from "./pages/cart/Cart";
 import Footer from "./components/footer/Footer";
+import { CartProvider } from "./utils/CartContext"; // Import CartProvider
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Header />
-        <div className="main-content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/catalogue" element={<Catalogue />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/product/:id" element={<Product />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/cart" element={<Cart />} />{" "}
-            {/* Ensure this route is included */}
-          </Routes>
+    <CartProvider>
+      {" "}
+      {/* Wrap the app in the CartProvider */}
+      <Router>
+        <div className="App">
+          <Header />
+          <div className="main-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/shop" element={<Shop />} />
+              <Route path="/catalogue" element={<Catalogue />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/product/:id" element={<Product />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/cart" element={<Cart />} />
+            </Routes>
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
-    </Router>
+      </Router>
+    </CartProvider>
   );
 }
 

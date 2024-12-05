@@ -1,28 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { fetchCart } from "../../utils/shopifyAPI"; // Import Shopify API helper
+import React, { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { CartContext } from "/Users/calebdickson/Desktop/noreact/main/src/utils/CartContext.js";
 import "./cartSidebar.css";
 
-const CartSidebar = ({ isOpen, onClose, cartId }) => {
-  const navigate = useNavigate();
-  const [cartItems, setCartItems] = useState([]);
+const CartSidebar = ({ isOpen, onClose }) => {
+  const { cartItems, updateCart, checkoutUrl } = useContext(CartContext);
+  const navigate = useNavigate(); // Initialize useNavigate
 
-  // Fetch cart items when the sidebar opens
   useEffect(() => {
-    if (isOpen && cartId) {
-      fetchCart(cartId).then((items) => setCartItems(items));
+    if (isOpen) {
+      updateCart();
     }
-  }, [isOpen, cartId]);
+  }, [isOpen, updateCart]);
 
-  // Handle Proceed to Checkout
-  const proceedToCheckout = () => {
-    window.location.href = "https://your-shopify-checkout-url.com"; // Replace with your Shopify checkout URL
+  const handleViewFullCart = () => {
+    navigate("/cart"); // Navigate to the cart page
+    onClose(); // Close the sidebar
   };
 
-  // Handle View Full Cart
-  const viewFullCart = () => {
-    navigate("/cart");
-    onClose();
+  const handleCheckout = () => {
+    window.location.href = checkoutUrl; // Redirect to Shopify checkout
   };
 
   return (
@@ -35,26 +32,24 @@ const CartSidebar = ({ isOpen, onClose, cartId }) => {
       </div>
       <div className="cart-sidebar-content">
         {cartItems.length === 0 ? (
-          <p>No items in cart</p>
+          <p>Your cart is empty.</p>
         ) : (
-          cartItems.map(({ node }) => (
-            <div className="cart-item" key={node.id}>
-              <img
-                src={node.merchandise.product.images.edges[0]?.node.src}
-                alt={node.merchandise.product.title}
-              />
-              <div className="cart-item-info">
-                <h4>{node.merchandise.product.title}</h4>
-                <p>Price: ${node.merchandise.price.amount}</p>
-                <p>Quantity: {node.quantity}</p>
-              </div>
+          cartItems.map((item) => (
+            <div key={item.id} className="cart-item">
+              <p>
+                <strong>{item.title}</strong>
+              </p>
+              <p>Quantity: {item.quantity}</p>
+              <p>Price: ${item.price}</p>
             </div>
           ))
         )}
       </div>
       <div className="cart-sidebar-footer">
-        <button onClick={proceedToCheckout}>Proceed to Checkout</button>
-        <button onClick={viewFullCart}>View Full Cart</button>
+        <button onClick={handleViewFullCart}>View Full Cart</button>
+        <button onClick={handleCheckout}>Checkout</button>{" "}
+        {/* Add Checkout button */}
+        <button onClick={onClose}>Continue Shopping</button>
       </div>
     </div>
   );

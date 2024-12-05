@@ -1,101 +1,15 @@
 import axios from "axios";
 
 const SHOPIFY_API_URL =
-  "https://xxp1rp-ay.myshopify.com/api/2023-01/graphql.json"; // Replace with your Shopify store URL
-const SHOPIFY_ACCESS_TOKEN = "8cdeb3974049175807f309227c67fddb"; // Replace with your Shopify access token
+  "https://xxp1rp-ay.myshopify.com/api/2023-07/graphql.json";
+const SHOPIFY_ACCESS_TOKEN = "8cdeb3974049175807f309227c67fddb";
 
-export const fetchCart = async (cartId) => {
-  const query = `
-    query {
-      cart(id: "${cartId}") {
-        id
-        lines(first: 10) {
-          edges {
-            node {
-              id
-              quantity
-              merchandise {
-                ... on ProductVariant {
-                  id
-                  title
-                  price {
-                    amount
-                  }
-                  product {
-                    title
-                    images(first: 1) {
-                      edges {
-                        node {
-                          src
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  `;
-
-  const response = await axios.post(
-    SHOPIFY_API_URL,
-    { query },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        "X-Shopify-Storefront-Access-Token": SHOPIFY_ACCESS_TOKEN,
-      },
-    }
-  );
-
-  return response.data.data.cart.lines.edges;
-};
-
-export const addToCart = async (cartId, variantId, quantity) => {
-  const mutation = `
-    mutation {
-      cartLinesAdd(cartId: "${cartId}", lines: [{ merchandiseId: "${variantId}", quantity: ${quantity} }]) {
-        cart {
-          id
-          lines(first: 10) {
-            edges {
-              node {
-                id
-                quantity
-                merchandise {
-                  ... on ProductVariant {
-                    id
-                    title
-                    price {
-                      amount
-                    }
-                    product {
-                      title
-                      images(first: 1) {
-                        edges {
-                          node {
-                            src
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  `;
-
+const shopifyRequest = async (query, variables = {}) => {
   try {
+    console.log("Shopify API Request:", { query, variables }); // Debug log
     const response = await axios.post(
       SHOPIFY_API_URL,
-      { query: mutation },
+      { query, variables },
       {
         headers: {
           "Content-Type": "application/json",
@@ -103,19 +17,108 @@ export const addToCart = async (cartId, variantId, quantity) => {
         },
       }
     );
-
-    if (response.data.errors) {
-      console.error("Shopify API errors:", response.data.errors);
-      throw new Error(response.data.errors[0].message);
-    }
-
-    if (!response.data.data || !response.data.data.cart) {
-      throw new Error("Invalid response from Shopify API");
-    }
-
-    return response.data.data.cart.lines.edges;
+    console.log("Shopify API Response:", response.data.data); // Debug log
+    return response.data.data;
   } catch (error) {
-    console.error("Error adding to cart:", error);
+    console.error("Shopify API Error:", error.response?.data || error.message);
     throw error;
   }
+};
+
+// Create a new cart
+export const createCart = async () => {
+  const mutation = `
+    mutation {
+      cartCreate {
+        cart {
+          id
+          checkoutUrl
+          lines(first: 10) {
+            edges {
+              node {
+                id
+                merchandise {
+                  ... on ProductVariant {
+                    id
+                  }
+                }
+                quantity
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+  const data = await shopifyRequest(mutation);
+  return data?.cartCreate?.cart;
+};
+
+// Add an item to the cart
+export const addToCart = async (cartId, variantId, quantity) => {
+  const mutation = `
+    mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
+      cartLinesAdd(cartId: $cartId, lines: $lines) {
+        cart {
+          id
+          checkoutUrl
+          lines(first: 10) {
+            edges {
+              node {
+                id
+                merchandise {
+                  ... on ProductVariant {
+                    id
+                    title
+                    price {
+                      amount
+                    }
+                  }
+                }
+                quantity
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+  const variables = {
+    cartId,
+    lines: [{ merchandiseId: variantId, quantity }],
+  };
+  const data = await shopifyRequest(mutation, variables);
+  return data?.cartLinesAdd?.cart;
+};
+
+// Fetch cart details
+export const fetchCart = async (cartId) => {
+  const query = `
+    query cart($cartId: ID!) {
+      cart(id: $cartId) {
+        id
+        checkoutUrl
+        lines(first: 10) {
+          edges {
+            node {
+              id
+              merchandise {
+                ... on ProductVariant {
+                  id
+                  title
+                  price {
+                    amount
+                  }
+                }
+              }
+              quantity
+            }
+          }
+        }
+      }
+    }
+  `;
+  const variables = { cartId };
+  const data = await shopifyRequest(query, variables);
+  return data?.cart;
 };

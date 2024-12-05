@@ -122,6 +122,20 @@ body {
   gap: 5px; /* Add gap between buttons */
 }
 
+.view-product-button {
+  padding: 8px 18px;
+  background-color: #333;
+  border-radius: 5px;
+  color: #f9f9f9;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.view-product-button:hover {
+  background-color: #111;
+}
+
 .shop-container {
   position: relative;
   width: 100%;

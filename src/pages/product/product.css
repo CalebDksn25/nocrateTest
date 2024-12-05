@@ -51,15 +51,15 @@
   margin-bottom: 20px;
 }
 
-.product-size {
+.product-variants {
   margin-bottom: 20px;
 }
 
-.product-size label {
+.product-variants label {
   margin-right: 10px;
 }
 
-.product-size select {
+.product-variants select {
   padding: 5px;
   font-size: 1em;
 }
