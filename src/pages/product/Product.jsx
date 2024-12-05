@@ -4,6 +4,8 @@ import { productData } from "/Users/calebdickson/Desktop/noreact/main/src/pages/
 import { addToCart } from "/Users/calebdickson/Desktop/noreact/main/src/utils/shopifyAPI.js";
 import { CartContext } from "/Users/calebdickson/Desktop/noreact/main/src/utils/CartContext.js";
 import "./product.css";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // Import carousel styles
+import { Carousel } from "react-responsive-carousel"; // Import Carousel component
 
 const Product = () => {
   const { id } = useParams();
@@ -51,7 +53,17 @@ const Product = () => {
   return (
     <div className="product-container">
       <div className="product-left">
-        <img src={product.image} alt={product.name} className="product-image" />
+        <Carousel className="carousel-container">
+          {product.images.map((image, index) => (
+            <div key={index} className="img-container">
+              <img
+                className="carousel-image"
+                src={image}
+                alt={`${product.name} ${index + 1}`}
+              />
+            </div>
+          ))}
+        </Carousel>
         <div className="product-bar"></div>
         <p className="product-description">{product.description}</p>
       </div>

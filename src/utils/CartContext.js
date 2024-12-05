@@ -1,5 +1,10 @@
 import React, { createContext, useState, useEffect } from "react";
-import { fetchCart, createCart } from "./shopifyAPI";
+import {
+  fetchCart,
+  createCart,
+  removeFromCart,
+  updateCartQuantity,
+} from "./shopifyAPI";
 
 export const CartContext = createContext();
 
@@ -19,39 +24,61 @@ export const CartProvider = ({ children }) => {
     initializeCart();
   }, [cartId]);
 
-  const updateCart = async () => {
-    try {
-      if (!cartId) {
-        // If no cart exists, create a new one
-        const newCart = await createCart();
-        setCartId(newCart.id);
-        localStorage.setItem("cartId", newCart.id);
-        setCartItems([]);
-        return;
-      }
-
+  const updateCart = async (updatedCart) => {
+    if (updatedCart) {
+      setCartItems(
+        updatedCart.lines.edges.map((edge) => ({
+          id: edge.node.id,
+          title: edge.node.merchandise.product?.title || "No Title Available",
+          image: edge.node.merchandise.image?.src || "/assets/no-image.png",
+          price: edge.node.merchandise.price?.amount || "0.00",
+          quantity: edge.node.quantity,
+          size:
+            edge.node.merchandise.selectedOptions.find(
+              (option) => option.name.toLowerCase() === "size"
+            )?.value || "N/A", // Extract size
+        }))
+      );
+      setCheckoutUrl(updatedCart.checkoutUrl);
+    } else if (cartId) {
       const cart = await fetchCart(cartId);
-      const processedCartItems = cart.lines.edges.map((edge) => ({
-        id: edge.node.merchandise.id,
-        title: edge.node.merchandise.title,
-        quantity: edge.node.quantity,
-        price: edge.node.merchandise.price.amount,
-      }));
-
-      setCartItems(processedCartItems);
-    } catch (error) {
-      console.error("Error updating cart:", error);
-      // Optionally create a new cart if fetching fails
-      const newCart = await createCart();
-      setCartId(newCart.id);
-      localStorage.setItem("cartId", newCart.id);
-      setCartItems([]);
+      setCartItems(
+        cart.lines.edges.map((edge) => ({
+          id: edge.node.id,
+          title: edge.node.merchandise.product?.title || "No Title Available",
+          image: edge.node.merchandise.image?.src || "/assets/no-image.png",
+          price: edge.node.merchandise.price?.amount || "0.00",
+          quantity: edge.node.quantity,
+          size:
+            edge.node.merchandise.selectedOptions.find(
+              (option) => option.name.toLowerCase() === "size"
+            )?.value || "N/A", // Extract size
+        }))
+      );
+      setCheckoutUrl(cart.checkoutUrl);
     }
+  };
+
+  const handleRemoveFromCart = async (lineId) => {
+    const updatedCart = await removeFromCart(cartId, lineId);
+    updateCart(updatedCart);
+  };
+
+  const handleUpdateCartQuantity = async (lineId, quantity) => {
+    const updatedCart = await updateCartQuantity(cartId, lineId, quantity);
+    updateCart(updatedCart);
   };
 
   return (
     <CartContext.Provider
-      value={{ cartId, cartItems, updateCart, checkoutUrl }}>
+      value={{
+        cartId,
+        cartItems,
+        updateCart,
+        checkoutUrl,
+        handleRemoveFromCart,
+        handleUpdateCartQuantity,
+      }}>
       {children}
     </CartContext.Provider>
   );

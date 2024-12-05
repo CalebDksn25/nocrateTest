@@ -4,7 +4,13 @@ import { CartContext } from "/Users/calebdickson/Desktop/noreact/main/src/utils/
 import "./cartSidebar.css";
 
 const CartSidebar = ({ isOpen, onClose }) => {
-  const { cartItems, updateCart, checkoutUrl } = useContext(CartContext);
+  const {
+    cartItems,
+    updateCart,
+    checkoutUrl,
+    handleRemoveFromCart,
+    handleUpdateCartQuantity,
+  } = useContext(CartContext);
   const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
@@ -39,16 +45,29 @@ const CartSidebar = ({ isOpen, onClose }) => {
               <p>
                 <strong>{item.title}</strong>
               </p>
-              <p>Quantity: {item.quantity}</p>
+              <p>Size: {item.size}</p> {/* Display product size */}
+              <p>
+                Quantity:
+                <input
+                  type="number"
+                  value={item.quantity}
+                  min="1"
+                  onChange={(e) =>
+                    handleUpdateCartQuantity(item.id, parseInt(e.target.value))
+                  }
+                />
+              </p>
               <p>Price: ${item.price}</p>
+              <button onClick={() => handleRemoveFromCart(item.id)}>
+                Remove
+              </button>
             </div>
           ))
         )}
       </div>
       <div className="cart-sidebar-footer">
         <button onClick={handleViewFullCart}>View Full Cart</button>
-        <button onClick={handleCheckout}>Checkout</button>{" "}
-        {/* Add Checkout button */}
+        <button onClick={handleCheckout}>Checkout</button>
         <button onClick={onClose}>Continue Shopping</button>
       </div>
     </div>

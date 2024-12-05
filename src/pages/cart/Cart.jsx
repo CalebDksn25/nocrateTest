@@ -3,7 +3,13 @@ import { CartContext } from "/Users/calebdickson/Desktop/noreact/main/src/utils/
 import "./cart.css";
 
 const Cart = () => {
-  const { cartItems, updateCart, checkoutUrl } = useContext(CartContext);
+  const {
+    cartItems,
+    updateCart,
+    checkoutUrl,
+    handleRemoveFromCart,
+    handleUpdateCartQuantity,
+  } = useContext(CartContext);
 
   useEffect(() => {
     updateCart();
@@ -24,8 +30,24 @@ const Cart = () => {
             <p>
               <strong>{item.title}</strong>
             </p>
-            <p>Quantity: {item.quantity}</p>
+            <p>
+              Size: {item.variantTitle} {/* Display the size */}
+            </p>
+            <p>
+              Quantity:
+              <input
+                type="number"
+                value={item.quantity}
+                min="1"
+                onChange={(e) =>
+                  handleUpdateCartQuantity(item.id, parseInt(e.target.value))
+                }
+              />
+            </p>
             <p>Price: ${item.price}</p>
+            <button onClick={() => handleRemoveFromCart(item.id)}>
+              Remove
+            </button>
           </div>
         ))
       )}

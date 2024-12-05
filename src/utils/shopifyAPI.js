@@ -28,28 +28,41 @@ const shopifyRequest = async (query, variables = {}) => {
 // Create a new cart
 export const createCart = async () => {
   const mutation = `
-    mutation {
-      cartCreate {
-        cart {
-          id
-          checkoutUrl
-          lines(first: 10) {
-            edges {
-              node {
-                id
-                merchandise {
-                  ... on ProductVariant {
-                    id
+  mutation {
+    cartCreate {
+      cart {
+        id
+        checkoutUrl
+        lines(first: 10) {
+          edges {
+            node {
+              id
+              merchandise {
+                ... on ProductVariant {
+                  id
+                  price {
+                    amount
+                  }
+                  product {
+                    title
+                  }
+                  image {
+                    src
+                  }
+                  selectedOptions {
+                    name
+                    value
                   }
                 }
-                quantity
               }
+              quantity
             }
           }
         }
       }
     }
-  `;
+  }
+`;
   const data = await shopifyRequest(mutation);
   return data?.cartCreate?.cart;
 };
@@ -57,11 +70,55 @@ export const createCart = async () => {
 // Add an item to the cart
 export const addToCart = async (cartId, variantId, quantity) => {
   const mutation = `
-    mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
-      cartLinesAdd(cartId: $cartId, lines: $lines) {
+  mutation ($cartId: ID!, $lines: [CartLineInput!]!) {
+    cartLinesAdd(cartId: $cartId, lines: $lines) {
+      cart {
+        id
+        lines(first: 10) {
+          edges {
+            node {
+              id
+              merchandise {
+                ... on ProductVariant {
+                  id
+                  price {
+                    amount
+                  }
+                  product {
+                    title
+                  }
+                  image {
+                    src
+                  }
+                  selectedOptions {
+                    name
+                    value
+                  }
+                }
+              }
+              quantity
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+  const variables = {
+    cartId,
+    lines: [{ merchandiseId: variantId, quantity }],
+  };
+  const data = await shopifyRequest(mutation, variables);
+  return data?.cartLinesAdd?.cart;
+};
+
+// Remove an item from the cart
+export const removeFromCart = async (cartId, lineId) => {
+  const mutation = `
+    mutation ($cartId: ID!, $lineIds: [ID!]!) {
+      cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
         cart {
           id
-          checkoutUrl
           lines(first: 10) {
             edges {
               node {
@@ -69,9 +126,15 @@ export const addToCart = async (cartId, variantId, quantity) => {
                 merchandise {
                   ... on ProductVariant {
                     id
-                    title
-                    price {
-                      amount
+                    product {
+                      title
+                    }
+                    image {
+                      src
+                    }
+                    selectedOptions {
+                      name
+                      value
                     }
                   }
                 }
@@ -85,39 +148,90 @@ export const addToCart = async (cartId, variantId, quantity) => {
   `;
   const variables = {
     cartId,
-    lines: [{ merchandiseId: variantId, quantity }],
+    lineIds: [lineId],
   };
   const data = await shopifyRequest(mutation, variables);
-  return data?.cartLinesAdd?.cart;
+  return data?.cartLinesRemove?.cart;
 };
 
-// Fetch cart details
-export const fetchCart = async (cartId) => {
-  const query = `
-    query cart($cartId: ID!) {
-      cart(id: $cartId) {
-        id
-        checkoutUrl
-        lines(first: 10) {
-          edges {
-            node {
-              id
-              merchandise {
-                ... on ProductVariant {
-                  id
-                  title
-                  price {
-                    amount
+// Update item quantity in the cart
+export const updateCartQuantity = async (cartId, lineId, quantity) => {
+  const mutation = `
+    mutation ($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
+      cartLinesUpdate(cartId: $cartId, lines: $lines) {
+        cart {
+          id
+          lines(first: 10) {
+            edges {
+              node {
+                id
+                merchandise {
+                  ... on ProductVariant {
+                    id
+                    product {
+                      title
+                    }
+                    image {
+                      src
+                    }
+                    selectedOptions {
+                      name
+                      value
+                    }
                   }
                 }
+                quantity
               }
-              quantity
             }
           }
         }
       }
     }
   `;
+  const variables = {
+    cartId,
+    lines: [{ id: lineId, quantity }],
+  };
+  const data = await shopifyRequest(mutation, variables);
+  return data?.cartLinesUpdate?.cart;
+};
+
+// Fetch cart details
+export const fetchCart = async (cartId) => {
+  const query = `
+  query cart($cartId: ID!) {
+    cart(id: $cartId) {
+      id
+      checkoutUrl
+      lines(first: 10) {
+        edges {
+          node {
+            id
+            merchandise {
+              ... on ProductVariant {
+                id
+                price {
+                  amount
+                }
+                product {
+                  title
+                }
+                image {
+                  src
+                }
+                selectedOptions {
+                  name
+                  value
+                }
+              }
+            }
+            quantity
+          }
+        }
+      }
+    }
+  }
+`;
   const variables = { cartId };
   const data = await shopifyRequest(query, variables);
   return data?.cart;

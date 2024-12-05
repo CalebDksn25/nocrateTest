@@ -1,7 +1,7 @@
 .product-container {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  padding: 40px 20px; /* Increase top padding to push the page down */
 }
 
 .product-left {
@@ -9,14 +9,35 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center; /* Center items vertically */
+  padding-top: 40px; /* Add padding to push the carousel down */
 }
 
-.product-image {
+.main-product-image {
   width: 100%;
   max-width: 400px;
+  max-height: 400px;
   height: auto;
-  max-height: 400px; /* Set a maximum height */
-  object-fit: contain; /* Ensure the entire image is visible within its container */
+  object-fit: contain;
+}
+
+.carousel-container {
+  width: 100%;
+  max-width: 600px;
+}
+
+.carousel .slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-image {
+  max-width: 300px;
+  max-height: 400px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
 .product-bar {
@@ -24,35 +45,39 @@
   height: 5px;
   background-color: black;
   margin: 20px 0;
-  max-width: 400px;
+  max-width: 600px;
 }
 
 .product-description {
   text-align: center;
   width: 100%;
-  max-width: 350px;
+  max-width: 600px;
 }
 
 .product-right {
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center; /* Center align items */
   padding-left: 20px;
+  justify-content: center; /* Center items vertically */
 }
 
 .product-title {
   font-size: 2em;
   margin-bottom: 10px;
+  text-align: center; /* Center text */
 }
 
 .product-price {
   font-size: 1.5em;
   margin-bottom: 20px;
+  text-align: center; /* Center text */
 }
 
 .product-variants {
   margin-bottom: 20px;
+  text-align: center; /* Center text */
 }
 
 .product-variants label {
@@ -66,11 +91,16 @@
 
 .add-to-cart {
   padding: 10px 20px;
-  background-color: black;
+  background-color: #333;
+  border-radius: 4px;
   color: white;
   border: none;
   cursor: pointer;
   margin-bottom: 20px;
+}
+
+.add-to-cart:hover {
+  background-color: #111;
 }
 
 .product-navigation {
@@ -97,4 +127,57 @@
 .size-select:hover {
   background-color: #333;
   color: #f9f9f9;
+}
+
+.img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 300px;
+  max-height: 400px;
+  width: auto;
+  height: auto;
+}
+
+.slide {
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel .control-arrow {
+  background: rgba(0, 0, 0, 0.5); /* Set background color */
+  border-radius: 50%; /* Make the arrows circular */
+  width: 40px; /* Set width */
+  height: 40px; /* Set height */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Offset vertically for exact centering */
+  z-index: 1; /* Ensure arrows are above the images */
+  position: absolute; /* Position arrows absolutely within the carousel */
+}
+
+.carousel .control-prev.control-arrow {
+  left: -20px; /* Position on the left side, adjust as needed */
+}
+
+.carousel .control-next.control-arrow {
+  right: -20px; /* Position on the right side, adjust as needed */
+}
+
+.carousel .control-arrow:hover {
+  background: rgba(0, 0, 0, 0.8); /* Darken the background on hover */
+}
+
+.carousel .control-arrow:before {
+  border: solid white; /* Arrow color */
+  border-width: 0 3px 3px 0; /* Arrow dimensions */
+  display: inline-block;
+  padding: 8px; /* Arrow size */
+}
+
+.carousel .control-prev.control-arrow:before {
+  transform: rotate(135deg); /* Rotate for left arrow */
+}
+
+.carousel .control-next.control-arrow:before {
+  transform: rotate(-45deg); /* Rotate for right arrow */
 }

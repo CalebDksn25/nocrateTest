@@ -10,23 +10,22 @@ const Shop = () => {
     navigate(`/product/${id}`);
   };
 
-  const handleBuyNowClick = (id) => {
-    navigate(`/product/${id}`); // Navigate to product page for now
-    // You can add logic here to directly add the product to the cart and navigate to checkout
-  };
-
   return (
     <div className="shop-container">
       <h1>Shop</h1>
       <div className="product-list">
         {productData.map((product) => (
           <div key={product.id} className="product-card">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="product-image"
-              onClick={() => handleImageClick(product.id)} // Add onClick handler
-            />
+            {product.images && product.images[0] ? (
+              <img
+                src={product.images[0]} // Display the first image
+                alt={product.name}
+                className="product-image"
+                onClick={() => handleImageClick(product.id)} // Add onClick handler
+              />
+            ) : (
+              <div className="image-placeholder">No Image Available</div>
+            )}
             <h2>{product.name}</h2>
             <p>${product.price}</p>
             <div className="button-container">
@@ -35,11 +34,6 @@ const Shop = () => {
                 className="view-product-button">
                 View Product
               </Link>
-              <button
-                className="view-product-button"
-                onClick={() => handleBuyNowClick(product.id)}>
-                Buy Now
-              </button>
             </div>
           </div>
         ))}
