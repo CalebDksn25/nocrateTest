@@ -7,11 +7,25 @@ const Sidenav = ({ isOpen, onClose }) => {
       <button className="close-btn" onClick={onClose}>
         &times;
       </button>
-      <a href="/">Home</a>
-      <a href="/login">Account</a>
-      <a href="/shop">Shop</a>
-      <a href="/cart">Cart</a>
-      <a href="/contact">Contact</a>
+      <a href="/" className="list-text">
+        Home
+      </a>
+      <a href="/login" className="list-text">
+        Account
+      </a>
+      <a href="/shop" className="list-text">
+        Shop
+      </a>
+      <a href="/cart" className="list-text">
+        Cart
+      </a>
+      <a href="/contact" className="list-text">
+        Contact
+      </a>
+      <div className="icon-container">
+        <i className="bx bxl-tiktok social-icon"></i>
+        <i className="bx bxl-instagram-alt social-icon"></i>
+      </div>
     </div>
   );
 };

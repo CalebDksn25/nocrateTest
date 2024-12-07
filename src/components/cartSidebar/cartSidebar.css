@@ -34,7 +34,12 @@
   margin-bottom: 10px;
 }
 
-/* Remove cart-item-image styles */
+.cart-item-image {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
 
 .cart-item input[type="number"] {
   width: 50px;
@@ -57,8 +62,8 @@
 }
 
 .cart-sidebar-footer {
-  padding: 10px;
-  border-top: 1px solid #ddd;
+  padding: 15px;
+  background-color: #f9f9f9;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -89,4 +94,16 @@
 
 .close-button:hover {
   background-color: #111;
+}
+
+.cart-subtotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 1.1em;
 }

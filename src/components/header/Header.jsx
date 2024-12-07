@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { CartContext } from "../../utils/CartContext";
 import "boxicons/css/boxicons.min.css";
 import "./header.css";
 import nocratelogo from "../../assets/nocratelogo.png";
@@ -9,6 +10,7 @@ import CartSidebar from "../cartSidebar/CartSidebar"; // Import CartSidebar comp
 function Header() {
   const [isSidenavOpen, setIsSidenavOpen] = useState(false);
   const [isCartSidebarOpen, setIsCartSidebarOpen] = useState(false); // State for cart sidebar
+  const { totalItems } = useContext(CartContext);
   const navigate = useNavigate();
 
   const toggleSidenav = () => {
@@ -33,24 +35,19 @@ function Header() {
         <div className="menu-icon" onClick={toggleSidenav}>
           <i className="bx bx-menu-alt-left"></i>
         </div>
-        <div className="spacer"></div>
         <div className="logo" onClick={navigateHome}>
           <img src={nocratelogo} alt="Logo" />
         </div>
-        <div className="spacer"></div>
         <div className="icons">
-          <i className="bx bx-search-alt-2"></i>
           <i className="bx bx-user" onClick={navigateToLogin}></i>
-          <i className="bx bxs-cart" onClick={toggleCartSidebar}></i>{" "}
-          {/* Toggle cart sidebar */}
+          <div className="cart-icon-container">
+            <i className="bx bxs-cart" onClick={toggleCartSidebar}></i>
+            {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
+          </div>
         </div>
       </header>
       <Sidenav isOpen={isSidenavOpen} onClose={toggleSidenav} />
-      <CartSidebar
-        isOpen={isCartSidebarOpen}
-        onClose={toggleCartSidebar}
-      />{" "}
-      {/* Cart sidebar */}
+      <CartSidebar isOpen={isCartSidebarOpen} onClose={toggleCartSidebar} />
     </div>
   );
 }

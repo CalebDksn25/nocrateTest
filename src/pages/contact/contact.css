@@ -47,3 +47,29 @@
   resize: none;
   height: 150px;
 }
+
+@media (max-width: 768px) {
+  .contact-form {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-form {
+    padding: 10px;
+  }
+
+  .contact-form h2 {
+    font-size: 1.5em;
+  }
+
+  .contact-form button {
+    padding: 8px;
+  }
+}

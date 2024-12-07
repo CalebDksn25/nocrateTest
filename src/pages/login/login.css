@@ -2,16 +2,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
   background-color: #f9f9f9;
 }
 
 .login-form {
   background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 5px;
+  padding: 30px;
+  border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 300px;
+  width: 500px;
+  margin: 0 auto;
 }
 
 .login-form h2 {
@@ -21,7 +26,10 @@
 
 .form {
   margin-bottom: 15px;
-  width: 350px;
+  width: 100%;
+  max-width: 450px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .form label {
@@ -30,7 +38,7 @@
 }
 
 .form input {
-  width: 300px; /* Set width to at least 300px */
+  width: 100%;
   padding: 8px;
   box-sizing: border-box;
   border: 1px solid #ddd;
@@ -38,13 +46,16 @@
 }
 
 .login-button {
-  width: 100%;
+  width: 450px;
   padding: 10px;
   background-color: #333; /* Set background color to #333 */
   color: white;
   border: none;
   border-radius: 3px;
   cursor: pointer;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 .login-button:hover {
@@ -74,6 +85,10 @@
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
+  width: 450px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 .google-button:hover {
@@ -89,6 +104,10 @@
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
+  width: 450px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 .shopify-button:hover {

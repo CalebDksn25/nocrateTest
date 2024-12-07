@@ -30,8 +30,8 @@ body {
   flex-wrap: wrap;
   justify-content: space-around; /* Spread out the items */
   gap: 40px; /* Increase the gap between items */
-  padding: 20px;
-  margin-top: 150px;
+  padding: 200px;
+  margin-top: none; /* Add top margin */
 }
 
 .product-item {
@@ -87,10 +87,8 @@ body {
 }
 
 .product-card {
-  flex: 1 1 calc(30% - 40px); /* 3 products per row with larger spacing */
-  max-width: calc(
-    30% - 40px
-  ); /* Ensure the card doesn’t exceed its allocated space */
+  flex: 1 1 calc(33.333% - 40px); /* 3 products per row by default */
+  max-width: calc(33.333% - 40px);
   box-sizing: border-box;
   padding: 15px;
   border-radius: 8px;
@@ -159,7 +157,7 @@ body {
   justify-content: flex-start;
   margin: 0;
   overflow: visible;
-  padding: 80px 20px 20px; /* Add padding to avoid being cut off by the header */
+  padding: 120px 20px 20px; /* Increase top padding */
   box-sizing: border-box;
 }
 
@@ -187,4 +185,58 @@ body {
   color: #666;
   font-size: 1.2em;
   border-radius: 8px;
+}
+
+/*========== BREAKPOINTS ==========*/
+@media screen and (max-width: 992px) {
+  .product-card {
+    flex: 1 1 calc(50% - 40px); /* 2 products per row */
+    max-width: calc(50% - 40px);
+  }
+
+  .product-list {
+    margin-top: 150px; /* Revert to original */
+  }
+
+  .shop-container {
+    padding-top: 140px;
+  }
+}
+
+/*Medium Devices*/
+@media screen and (max-width: 768px) {
+  .product-card {
+    flex: 1 1 calc(50% - 30px); /* 2 products per row with smaller gap */
+    max-width: calc(50% - 30px);
+  }
+
+  .product-list {
+    margin-top: 150px; /* Revert to original */
+    gap: 30px;
+    padding: 100px;
+  }
+
+  .shop-container {
+    padding-top: 160px;
+  }
+}
+
+/*Small Devices*/
+@media screen and (max-width: 576px) {
+  .product-card {
+    flex: 1 1 100%; /* 1 product per row */
+    max-width: 100%;
+  }
+
+  .product-list {
+    margin-top: 150px; /* Revert to original */
+    gap: 20px;
+  }
+
+  .shop-container {
+    padding-top: 180px;
+  }
+}
+
+@media screen and (max-width: 350px) {
 }

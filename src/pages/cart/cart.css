@@ -43,6 +43,9 @@
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .cart-actions {
@@ -62,4 +65,25 @@
 
 .cart-actions button:hover {
   background-color: #111;
+}
+
+.cart-summary {
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+}
+
+.cart-subtotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 1.2em;
 }

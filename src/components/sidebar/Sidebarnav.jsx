@@ -83,6 +83,20 @@ const CartSidebar = ({ isOpen, onClose }) => {
         ) : null}
         <button onClick={onClose}>Continue Shopping</button>
       </div>
+      <div className="icon-container">
+        <a
+          href="https://www.tiktok.com/@yourhandle"
+          target="_blank"
+          rel="noopener noreferrer">
+          <i className="bx bxl-tiktok"></i>
+        </a>
+        <a
+          href="https://www.instagram.com/yourhandle"
+          target="_blank"
+          rel="noopener noreferrer">
+          <i className="bx bxl-instagram-alt"></i>
+        </a>
+      </div>
     </div>
   );
 };

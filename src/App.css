@@ -42,13 +42,15 @@
 }
 
 .main-content {
-  margin-top: 60px; /* Adjust based on the height of your header */
+  margin-top: 60px;
   flex: 1;
-  overflow-y: auto;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 60px; /* Ensure content starts below the header */
+  padding-top: 0;
+  min-height: calc(100vh - 120px); /* Adjust for header and footer */
+  overflow: hidden;
 }
 
 .App-link {

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { productData } from "./Data.jsx"; // Your local data
 import "./shop.css";
 
@@ -12,7 +12,6 @@ const Shop = () => {
 
   return (
     <div className="shop-container">
-      <h1>Shop</h1>
       <div className="product-list">
         {productData.map((product) => (
           <div key={product.id} className="product-card">
@@ -28,13 +27,7 @@ const Shop = () => {
             )}
             <h2>{product.name}</h2>
             <p>${product.price}</p>
-            <div className="button-container">
-              <Link
-                to={`/product/${product.id}`}
-                className="view-product-button">
-                View Product
-              </Link>
-            </div>
+            <div className="button-container"></div>
           </div>
         ))}
       </div>

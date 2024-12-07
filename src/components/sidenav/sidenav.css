@@ -12,7 +12,7 @@
 }
 
 .sidenav.open {
-  width: 25%;
+  width: 20%;
 }
 
 .sidenav a {
@@ -38,4 +38,50 @@
   border: none;
   color: #818181;
   cursor: pointer;
+}
+
+.icon-container {
+  color: white;
+}
+
+/*========== BREAKPOINTS ==========*/
+/*Large Devices*/
+@media screen and (max-width: 992px) {
+  .sidenav.open {
+    width: 35%;
+  }
+}
+
+/*Medium Devices*/
+@media screen and (max-width: 768px) {
+  .sidenav.open {
+    width: 45%;
+  }
+
+  .sidenav a {
+    font-size: 20px;
+    padding: 6px 6px 6px 24px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .sidenav.open {
+    width: 65%;
+  }
+
+  .sidenav a {
+    font-size: 18px;
+    padding: 4px 4px 4px 16px;
+  }
+}
+
+/*Small Devices*/
+@media screen and (max-width: 350px) {
+  .sidenav.open {
+    width: 75%;
+  }
+
+  .sidenav a {
+    font-size: 16px;
+  }
 }
