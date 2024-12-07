@@ -23,8 +23,16 @@ const Sidenav = ({ isOpen, onClose }) => {
         Contact
       </a>
       <div className="icon-container">
-        <i className="bx bxl-tiktok social-icon"></i>
-        <i className="bx bxl-instagram-alt social-icon"></i>
+        <a
+          href="https://www.tiktok.com/@nocrate.collective?lang=en"
+          className="social-link">
+          <i className="bx bxl-tiktok social-icon"></i>
+        </a>
+        <a
+          href="https://www.instagram.com/nocrate.collective/"
+          className="social-link">
+          <i className="bx bxl-instagram-alt social-icon"></i>
+        </a>
       </div>
     </div>
   );

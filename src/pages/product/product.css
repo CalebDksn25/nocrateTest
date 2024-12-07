@@ -24,6 +24,7 @@
 .carousel-container {
   width: 100%;
   max-width: 600px;
+  position: relative; /* Add this */
 }
 
 .carousel .slide {
@@ -180,24 +181,43 @@ button:active .button_top {
 }
 
 .carousel .control-arrow {
-  background: rgba(0, 0, 0, 0.5); /* Set background color */
-  border-radius: 50%; /* Make the arrows circular */
-  width: 40px; /* Set width */
-  height: 40px; /* Set height */
-  top: 50%; /* Center vertically */
-  transform: translateY(-50%); /* Offset vertically for exact centering */
-  z-index: 1; /* Ensure arrows are above the images */
-  position: absolute; /* Position arrows absolutely within the carousel */
-  top: 50%; /* Center vertically */
-  transform: translateY(-50%); /* Offset vertically for exact centering */
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.5) !important;
+  border-radius: 50%;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  opacity: 0.8 !important;
 }
 
-.carousel .control-prev.control-arrow {
-  left: 10px; /* Position on the left side, adjust as needed */
+.carousel .control-prev {
+  left: 10px !important;
 }
 
-.carousel .control-next.control-arrow {
-  right: 10px; /* Position on the right side, adjust as needed */
+.carousel .control-next {
+  right: 10px !important;
+}
+
+.carousel .control-arrow:before {
+  border: solid white !important; /* Make sure the border is white */
+  border-width: 2px 2px 0 0 !important; /* Create a complete arrow shape */
+  display: inline-block;
+  padding: 6px !important;
+  content: "";
+  margin: 0 !important;
+}
+
+.carousel .control-prev.control-arrow:before {
+  transform: rotate(-135deg) !important; /* Rotate for left arrow */
+}
+
+.carousel .control-next.control-arrow:before {
+  transform: rotate(45deg) !important; /* Rotate for right arrow */
 }
 
 .carousel .control-arrow:hover {

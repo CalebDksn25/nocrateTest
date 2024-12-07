@@ -53,7 +53,15 @@ const Product = () => {
   return (
     <div className="product-container">
       <div className="product-left">
-        <Carousel className="carousel-container">
+        <Carousel
+          className="carousel-container"
+          showStatus={false}
+          showThumbs={false}
+          infiniteLoop={true}
+          emulateTouch={true}
+          swipeable={true}
+          preventMovementUntilSwipeScrollTolerance={true}
+          swipeScrollTolerance={50}>
           {product.images.map((image, index) => (
             <div key={index} className="img-container">
               <img

@@ -42,6 +42,31 @@
 
 .icon-container {
   color: white;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+  padding: 8px;
+}
+
+.social-icon {
+  font-size: 24px;
+  color: #818181;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.social-icon:hover {
+  color: #f1f1f1;
+}
+
+.social-link {
+  padding: 0 !important;
+  display: inline-block !important;
+}
+
+.social-link:hover {
+  color: inherit;
 }
 
 /*========== BREAKPOINTS ==========*/
