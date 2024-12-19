@@ -234,3 +234,104 @@ export const updateCartQuantity = async (cartId, lineId, quantity) => {
   const data = await shopifyRequest(mutation, variables);
   return data?.cartLinesUpdate?.cart;
 };
+
+// Shopify User Login and Signup
+export const loginCustomer = async (email, password) => {
+  const mutation = `
+  mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
+    customerAccessTokenCreate(input: $input) {
+      customerAccessToken {
+        accessToken
+        expiresAt
+      }
+      customerUserErrors {
+        code
+        field
+        message
+      }
+    }
+  }
+  `;
+
+  const variables = {
+    input: {
+      email,
+      password,
+    },
+  };
+
+  try {
+    const response = await shopifyRequest(mutation, variables);
+    const data = response.data.customerAccessTokenCreate;
+
+    if (data.customerUserErrors.length) {
+      throw new Error(data.customerUserErrors[0].message);
+    }
+
+    return data.customerAccessToken;
+  } catch (error) {
+    console.error("Error logging in customer: ", error);
+    throw error;
+  }
+};
+
+export const logoutCustomer = async (token) => {
+  const mutation = `
+  mutation customerAccessTokenDelete($customerAccessToken: String!) {
+    customerAccessTokenDelete(customerAccessToken: $customerAccessToken) {
+      deletedAccessToken
+      deletedCustomerAccessTokenId
+      userErrors {
+        field
+        message
+      }
+    }`;
+
+  const variables = { customerAccessToken: token };
+
+  try {
+    const response = await shopifyRequest(mutation, variables);
+    const data = response.data.customerAccessTokenDelete;
+
+    if (data.userErrors.length) {
+      throw new Error(data.userErrors[0].message);
+    }
+    return true; // Successful Logout
+  } catch (error) {
+    console.error("Error logging out customer:", error);
+    throw error;
+  }
+};
+
+export const fetchCustomerData = async (token) => {
+  const query = `
+    query customer($customerAccessToken: String!) {
+      customer(customerAccessToken: $customerAccessToken) {
+        firstName
+        lastName
+        email
+        orders(first: 5) {
+          edges {
+            node {
+              id
+              orderNumber
+              totalPrice {
+                amount
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  const variables = { customerAccessToken: token };
+
+  try {
+    const response = await shopifyRequest(query, variables);
+    return response.data.customer;
+  } catch (error) {
+    console.error("Error fetching customer data:", error);
+    throw error;
+  }
+};
