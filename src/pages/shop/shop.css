@@ -5,6 +5,8 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f9f9f9;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .container {
@@ -26,12 +28,14 @@ body {
 }
 
 .product-list {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around; /* Spread out the items */
-  gap: 40px; /* Increase the gap between items */
-  padding: 200px;
-  margin-top: none; /* Add top margin */
+  justify-content: space-between;
+  flex-wrap: wrap; /* Allow items to wrap to the next row */
+  gap: 30px; /* Add gap between elements */
+  justify-content: center;
 }
 
 .product-item {
@@ -159,6 +163,7 @@ body {
   overflow: visible;
   padding: 120px 20px 20px; /* Increase top padding */
   box-sizing: border-box;
+  overflow-y: auto; /* Enable vertical scrolling */
 }
 
 .button-now {
@@ -195,7 +200,15 @@ body {
   }
 
   .product-list {
-    margin-top: 150px; /* Revert to original */
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Allow items to wrap to the next row */
+    gap: 10px; /* Add gap between elements */
+    justify-content: center;
+    margin-top: 450px; /* Increase top margin */
   }
 
   .shop-container {
@@ -211,7 +224,7 @@ body {
   }
 
   .product-list {
-    margin-top: 150px; /* Revert to original */
+    margin-top: 350px; /* Revert to original */
     gap: 30px;
     padding: 100px;
   }
@@ -229,7 +242,7 @@ body {
   }
 
   .product-list {
-    margin-top: 150px; /* Revert to original */
+    margin-top: 350px; /* Revert to original */
     gap: 20px;
   }
 

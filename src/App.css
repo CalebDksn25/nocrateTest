@@ -5,11 +5,18 @@
   color: #333;
 }
 
+html,
+body {
+  height: 100%;
+  overflow-y: auto; /* Enable vertical scrolling */
+  margin: 0;
+}
+
 .App {
   text-align: center;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -41,20 +48,17 @@
   z-index: 1000;
 }
 
+.App-link {
+  color: #61dafb;
+}
+
 .main-content {
   margin-top: 60px;
   flex: 1;
-  position: relative;
-  display: flex;
   justify-content: center;
-  align-items: center;
-  padding-top: 0;
-  min-height: calc(100vh - 120px); /* Adjust for header and footer */
-  overflow: hidden;
-}
-
-.App-link {
-  color: #61dafb;
+  padding: 20px;
+  min-height: calc(100vh - 250px); /* Adjust for header and footer */
+  overflow-y: auto; /* Ensure the page is scrollable */
 }
 
 @keyframes App-logo-spin {
