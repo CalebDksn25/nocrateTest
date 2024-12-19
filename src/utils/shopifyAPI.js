@@ -1,12 +1,10 @@
 import axios from "axios";
 
-const SHOPIFY_API_URL =
-  "https://xxp1rp-ay.myshopify.com/api/2023-07/graphql.json";
-const SHOPIFY_ACCESS_TOKEN = "8cdeb3974049175807f309227c67fddb";
+const SHOPIFY_API_URL = process.env.REACT_APP_SHOPIFY_API_URL;
+const SHOPIFY_ACCESS_TOKEN = process.env.REACT_APP_SHOPIFY_ACCESS_TOKEN;
 
 const shopifyRequest = async (query, variables = {}) => {
   try {
-    console.log("Shopify API Request:", { query, variables }); // Debug log
     const response = await axios.post(
       SHOPIFY_API_URL,
       { query, variables },
@@ -17,7 +15,6 @@ const shopifyRequest = async (query, variables = {}) => {
         },
       }
     );
-    console.log("Shopify API Response:", response.data.data); // Debug log
     return response.data.data;
   } catch (error) {
     console.error("Shopify API Error:", error.response?.data || error.message);
@@ -28,26 +25,42 @@ const shopifyRequest = async (query, variables = {}) => {
 // Create a new cart
 export const createCart = async () => {
   const mutation = `
-  mutation {
-    cartCreate {
-      cart {
+    mutation {
+      cartCreate {
+        cart {
+          id
+          checkoutUrl
+        }
+      }
+    }
+  `;
+  const data = await shopifyRequest(mutation);
+  return data?.cartCreate?.cart;
+};
+
+// Fetch cart details
+export const fetchCart = async (cartId) => {
+  const query = `
+    query cart($cartId: ID!) {
+      cart(id: $cartId) {
         id
         checkoutUrl
         lines(first: 10) {
           edges {
             node {
               id
+              quantity
               merchandise {
                 ... on ProductVariant {
                   id
-                  price {
-                    amount
-                  }
                   product {
                     title
                   }
                   image {
                     src
+                  }
+                  price {
+                    amount
                   }
                   selectedOptions {
                     name
@@ -55,61 +68,79 @@ export const createCart = async () => {
                   }
                 }
               }
-              quantity
             }
           }
         }
       }
     }
-  }
-`;
-  const data = await shopifyRequest(mutation);
-  return data?.cartCreate?.cart;
+  `;
+  const variables = { cartId };
+  const data = await shopifyRequest(query, variables);
+  return data?.cart;
 };
 
 // Add an item to the cart
 export const addToCart = async (cartId, variantId, quantity) => {
   const mutation = `
-  mutation ($cartId: ID!, $lines: [CartLineInput!]!) {
-    cartLinesAdd(cartId: $cartId, lines: $lines) {
-      cart {
-        id
-        lines(first: 10) {
-          edges {
-            node {
-              id
-              merchandise {
-                ... on ProductVariant {
-                  id
-                  price {
-                    amount
-                  }
-                  product {
-                    title
-                  }
-                  image {
-                    src
-                  }
-                  selectedOptions {
-                    name
-                    value
+    mutation ($cartId: ID!, $lines: [CartLineInput!]!) {
+      cartLinesAdd(cartId: $cartId, lines: $lines) {
+        cart {
+          id
+          lines(first: 10) {
+            edges {
+              node {
+                id
+                quantity
+                merchandise {
+                  ... on ProductVariant {
+                    id
+                    product {
+                      title
+                    }
+                    image {
+                      src
+                    }
+                    price {
+                      amount
+                    }
+                    selectedOptions {
+                      name
+                      value
+                    }
                   }
                 }
               }
-              quantity
             }
           }
+          checkoutUrl
+        }
+        userErrors {
+          field
+          message
         }
       }
     }
-  }
-`;
+  `;
+
   const variables = {
     cartId,
     lines: [{ merchandiseId: variantId, quantity }],
   };
-  const data = await shopifyRequest(mutation, variables);
-  return data?.cartLinesAdd?.cart;
+
+  try {
+    const data = await shopifyRequest(mutation, variables);
+
+    // Handle Shopify user errors
+    if (data?.cartLinesAdd?.userErrors?.length) {
+      console.error("Add to Cart Error:", data.cartLinesAdd.userErrors);
+      throw new Error(data.cartLinesAdd.userErrors[0].message);
+    }
+
+    return data?.cartLinesAdd?.cart;
+  } catch (error) {
+    console.error("Error adding to cart:", error);
+    throw error;
+  }
 };
 
 // Remove an item from the cart
@@ -123,6 +154,7 @@ export const removeFromCart = async (cartId, lineId) => {
             edges {
               node {
                 id
+                quantity
                 merchandise {
                   ... on ProductVariant {
                     id
@@ -132,13 +164,15 @@ export const removeFromCart = async (cartId, lineId) => {
                     image {
                       src
                     }
+                    price {
+                      amount
+                    }
                     selectedOptions {
                       name
                       value
                     }
                   }
                 }
-                quantity
               }
             }
           }
@@ -150,6 +184,7 @@ export const removeFromCart = async (cartId, lineId) => {
     cartId,
     lineIds: [lineId],
   };
+
   const data = await shopifyRequest(mutation, variables);
   return data?.cartLinesRemove?.cart;
 };
@@ -165,6 +200,7 @@ export const updateCartQuantity = async (cartId, lineId, quantity) => {
             edges {
               node {
                 id
+                quantity
                 merchandise {
                   ... on ProductVariant {
                     id
@@ -174,13 +210,15 @@ export const updateCartQuantity = async (cartId, lineId, quantity) => {
                     image {
                       src
                     }
+                    price {
+                      amount
+                    }
                     selectedOptions {
                       name
                       value
                     }
                   }
                 }
-                quantity
               }
             }
           }
@@ -192,47 +230,7 @@ export const updateCartQuantity = async (cartId, lineId, quantity) => {
     cartId,
     lines: [{ id: lineId, quantity }],
   };
+
   const data = await shopifyRequest(mutation, variables);
   return data?.cartLinesUpdate?.cart;
-};
-
-// Fetch cart details
-export const fetchCart = async (cartId) => {
-  const query = `
-  query cart($cartId: ID!) {
-    cart(id: $cartId) {
-      id
-      checkoutUrl
-      lines(first: 10) {
-        edges {
-          node {
-            id
-            merchandise {
-              ... on ProductVariant {
-                id
-                price {
-                  amount
-                }
-                product {
-                  title
-                }
-                image {
-                  src
-                }
-                selectedOptions {
-                  name
-                  value
-                }
-              }
-            }
-            quantity
-          }
-        }
-      }
-    }
-  }
-`;
-  const variables = { cartId };
-  const data = await shopifyRequest(query, variables);
-  return data?.cart;
 };

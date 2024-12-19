@@ -26,21 +26,30 @@ const Product = () => {
       alert("Please select a size first!");
       return;
     }
-    try {
-      // Ensure the variant ID is the full Shopify variant ID
-      const fullVariantId = product.variants.find(
-        (variant) => variant.id === selectedVariant
-      )?.id;
 
-      if (!fullVariantId) {
-        console.error("Variant not found");
+    if (!product || !product.variants) {
+      console.error("Product or variants not defined.");
+      return;
+    }
+
+    console.log("Selected Variant ID:", selectedVariant); // Debug log
+    console.log("Product Variants:", product.variants); // Debug log
+
+    try {
+      // Find the full variant object based on the selected variant ID
+      const variant = product.variants.find((v) => v.id === selectedVariant);
+
+      if (!variant) {
+        console.error("Selected variant not found.");
         return;
       }
 
+      const fullVariantId = variant.id; // Ensure you have the correct ID
       const updatedCart = await addToCart(cartId, fullVariantId, 1);
+
       if (updatedCart) {
-        updateCart(); // Use the updateCart from context
-        console.log("Product added to cart successfully");
+        updateCart(updatedCart); // Update the cart context with the updated cart
+        console.log("Product added to cart successfully", updatedCart);
       }
     } catch (error) {
       console.error("Error adding to cart:", error);
@@ -78,21 +87,23 @@ const Product = () => {
       <div className="product-right">
         <h1 className="product-title">{product.name}</h1>
         <p className="product-price">${product.price}</p>
-        <div className="product-variants">
-          <label htmlFor="variant-select">Choose a size:</label>
-          <select
-            id="variant-select"
-            onChange={(e) => setSelectedVariant(e.target.value)}>
-            <option value="">Select a size</option>
-            {product.variants.map((variant) => (
-              <option key={variant.id} value={variant.id}>
-                {variant.size}
-              </option>
-            ))}
-          </select>
-        </div>
+        {product && product.variants && (
+          <div className="product-variants">
+            <label htmlFor="variant-select">Choose a size:</label>
+            <select
+              id="variant-select"
+              onChange={(e) => setSelectedVariant(e.target.value)}>
+              <option value="">Select a size</option>
+              {product.variants.map((variant) => (
+                <option key={variant.id} value={variant.id}>
+                  {variant.size}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
         <button>
-          <span class="button_top" onClick={handleAddToCart}>
+          <span className="button_top" onClick={handleAddToCart}>
             Add to Cart
           </span>
         </button>
