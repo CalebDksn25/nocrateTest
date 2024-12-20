@@ -60,53 +60,55 @@ const Product = () => {
   if (!product) return <p>Loading product...</p>;
 
   return (
-    <div className="product-container">
-      <div className="product-left">
-        <Carousel
-          className="carousel-container"
-          showStatus={false}
-          showThumbs={false}
-          infiniteLoop={true}
-          emulateTouch={true}
-          swipeable={true}
-          preventMovementUntilSwipeScrollTolerance={true}
-          swipeScrollTolerance={50}>
-          {product.images.map((image, index) => (
-            <div key={index} className="img-container">
-              <img
-                className="carousel-image"
-                src={image}
-                alt={`${product.name} ${index + 1}`}
-              />
+    <div className="product-page">
+      <div className="product-container">
+        <div className="product-left">
+          <Carousel
+            className="carousel-container"
+            showStatus={false}
+            showThumbs={false}
+            infiniteLoop={true}
+            emulateTouch={true}
+            swipeable={true}
+            preventMovementUntilSwipeScrollTolerance={true}
+            swipeScrollTolerance={50}>
+            {product.images.map((image, index) => (
+              <div key={index} className="img-container">
+                <img
+                  className="carousel-image"
+                  src={image}
+                  alt={`${product.name} ${index + 1}`}
+                />
+              </div>
+            ))}
+          </Carousel>
+          <div className="product-bar"></div>
+          <p className="product-description">{product.description}</p>
+        </div>
+        <div className="product-right">
+          <h1 className="product-title">{product.name}</h1>
+          <p className="product-price">${product.price}</p>
+          {product && product.variants && (
+            <div className="product-variants">
+              <label htmlFor="variant-select">Choose a size:</label>
+              <select
+                id="variant-select"
+                onChange={(e) => setSelectedVariant(e.target.value)}>
+                <option value="">Select a size</option>
+                {product.variants.map((variant) => (
+                  <option key={variant.id} value={variant.id}>
+                    {variant.size}
+                  </option>
+                ))}
+              </select>
             </div>
-          ))}
-        </Carousel>
-        <div className="product-bar"></div>
-        <p className="product-description">{product.description}</p>
-      </div>
-      <div className="product-right">
-        <h1 className="product-title">{product.name}</h1>
-        <p className="product-price">${product.price}</p>
-        {product && product.variants && (
-          <div className="product-variants">
-            <label htmlFor="variant-select">Choose a size:</label>
-            <select
-              id="variant-select"
-              onChange={(e) => setSelectedVariant(e.target.value)}>
-              <option value="">Select a size</option>
-              {product.variants.map((variant) => (
-                <option key={variant.id} value={variant.id}>
-                  {variant.size}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-        <button>
-          <span className="button_top" onClick={handleAddToCart}>
-            Add to Cart
-          </span>
-        </button>
+          )}
+          <button>
+            <span className="button_top" onClick={handleAddToCart}>
+              Add to Cart
+            </span>
+          </button>
+        </div>
       </div>
     </div>
   );
