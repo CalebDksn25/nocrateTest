@@ -20,6 +20,7 @@
   width: 500px;
   max-width: 90%; /* Ensure the form fits within the container */
   margin: 0 auto;
+  text-align: center; /* Center align text */
 }
 
 .login-form h2 {
@@ -114,4 +115,8 @@
 
 .shopify-button:hover {
   background-color: #5a8b3c;
+}
+
+.button-container {
+  margin-top: 20px; /* Add margin to separate text from button */
 }

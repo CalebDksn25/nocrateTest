@@ -15,6 +15,9 @@ html {
   text-align: center;
   position: relative;
   background-color: #f8f8f8;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .title {
@@ -68,6 +71,7 @@ html {
 }
 
 .center-content {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
