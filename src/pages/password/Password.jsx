@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import emailjs from "emailjs-com";
 import "./password.css";
 import nocratePants from "../../assets/nocratePants.JPG";
 import nocratetext from "../../assets/nocratetext3.png";
 //import nocrateLogo from "../../assets/nocratelogo.png";
+
+emailjs.init("a2C2aNm80o4a9f5-T"); // Initialize with your user ID
 
 const Password = ({ setIsPasswordProtected }) => {
   const navigate = useNavigate();
@@ -11,23 +14,49 @@ const Password = ({ setIsPasswordProtected }) => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const form = useRef();
+
+  useEffect(() => {
+    const formElement = document.getElementById("form");
+    const btn = document.getElementById("button");
+
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      btn.value = "Sending...";
+
+      const serviceID = "default_service";
+      const templateID = "template_m68n72y";
+
+      emailjs.sendForm(serviceID, templateID, formElement).then(
+        () => {
+          btn.value = "Send Email";
+          alert("Sent!");
+          form.current.reset();
+          setEmail("");
+        },
+        (err) => {
+          btn.value = "Send Email";
+          alert(JSON.stringify(err));
+        }
+      );
+    };
+
+    formElement.addEventListener("submit", handleSubmit);
+
+    // Cleanup function to remove the event listener
+    return () => {
+      formElement.removeEventListener("submit", handleSubmit);
+    };
+  }, []); // Empty dependency array ensures this runs only once
 
   const handlePasswordSubmit = (event) => {
     event.preventDefault();
-    // Replace 'your-password' with your actual password
     if (password === "your-password") {
       setIsPasswordProtected(false);
       navigate("/");
     } else {
       setError("Incorrect password");
     }
-  };
-
-  const handleEmailSubmit = (event) => {
-    event.preventDefault();
-    // Handle email submission logic here
-    alert("Thank you for subscribing!");
-    setEmail("");
   };
 
   return (
@@ -53,15 +82,16 @@ const Password = ({ setIsPasswordProtected }) => {
           <br />
           email list open now
         </p>
-        <form onSubmit={handleEmailSubmit} className="email-form">
+        <form id="form" ref={form} className="email-form">
           <input
             type="email"
+            name="email"
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <button type="submit">enlist</button>
+          <input type="submit" id="button" value="enlist" />
         </form>
         <button className="lock-icon" onClick={() => setIsModalOpen(true)}>
           🔒
