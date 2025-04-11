@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { productData } from "/Users/calebdickson/Desktop/noreact/main/src/pages/shop/Data.jsx";
-import { addToCart } from "/Users/calebdickson/Desktop/noreact/main/src/utils/shopifyAPI.js";
-import { CartContext } from "/Users/calebdickson/Desktop/noreact/main/src/utils/CartContext.js";
+import { productData } from "../../pages/shop/Data.jsx";
+import { addToCart } from "../../utils/shopifyAPI.js";
+import { CartContext } from "../../utils/CartContext";
 import "./product.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // Import carousel styles
 import { Carousel } from "react-responsive-carousel"; // Import Carousel component
