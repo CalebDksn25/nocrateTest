@@ -103,11 +103,9 @@ const Product = () => {
               </select>
             </div>
           )}
-          <button>
-            <span className="button_top" onClick={handleAddToCart}>
-              Add to Cart
-            </span>
-          </button>
+          <span className="add-to-cart" onClick={handleAddToCart}>
+            Add to Cart
+          </span>
         </div>
       </div>
     </div>

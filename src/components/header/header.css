@@ -13,8 +13,7 @@
   align-items: center;
   justify-items: center;
   padding: 10px 40px; /* Increased right padding */
-  background-color: #f8f8f8; /* Light gray background */
-  border-bottom: 1px solid #ddd;
+  background-color: transparent; /* Light gray background */
   position: fixed;
   top: 0;
   left: 0;

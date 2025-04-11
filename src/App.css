@@ -1,8 +1,32 @@
-@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&family=Special+Elite&display=swap");
+@font-face {
+  font-family: "OnlyOneDollar"; /* Give it a name */
+  src: url("./fonts/only-one-dollar/OnlyOneDollar-Medium.ttf")
+    format("opentype"); /* Adjust the path */
+  font-weight: bold; /* Adjust if necessary */
+  font-style: bold; /* Adjust if necessary */
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Special+Elite&display=swap");
 
 * {
-  font-family: "Special Elite", sans-serif;
-  color: #333;
+  font-family: "Special Elite", serif;
+  color: rgba(30, 40, 43, 0.8); /* Adjust the color */
+}
+
+.title-home {
+  font-family: "OnlyOneDollar", sans-serif; /* Apply the font */
+}
+
+.permanent-marker-regular {
+  font-family: "OnlyOneDollar", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.special-elite-regular {
+  font-family: "Special Elite", serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 html,
@@ -53,7 +77,6 @@ body {
 }
 
 .main-content {
-  margin-top: 60px;
   flex: 1;
   justify-content: center;
   padding: 20px;

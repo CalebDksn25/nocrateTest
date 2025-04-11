@@ -1,5 +1,11 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
 import "./App.css";
 import Home from "./pages/home/Home";
 import Shop from "./pages/shop/Shop";
@@ -9,32 +15,57 @@ import Header from "./components/header/Header";
 import Product from "./pages/product/Product";
 import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
-import Cart from "./pages/cart/Cart";
-import Footer from "./components/footer/Footer";
+import Cart from "./pages/cart/Cart"; // Import Cart component
+import CartSidebar from "./components/cartSidebar/CartSidebar"; // Import CartSidebar component
 import { CartProvider } from "./utils/CartContext"; // Import CartProvider
+import Password from "./pages/password/Password";
+
+function AppContent() {
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+  const isPasswordPage = location.pathname === "/password";
+  const [isCartSidebarOpen, setIsCartSidebarOpen] = useState(false);
+  const [isPasswordProtected, setIsPasswordProtected] = useState(false); // Set to true to enable password protection
+
+  // If password protection is enabled and user is not on password page, redirect to password page
+  if (isPasswordProtected && !isPasswordPage) {
+    return <Navigate to="/password" replace />;
+  }
+
+  return (
+    <div className="App">
+      {!isHomePage && !isPasswordPage && <Header />}
+      <CartSidebar
+        isOpen={isCartSidebarOpen}
+        onClose={() => setIsCartSidebarOpen(false)}
+      />
+      <div className="main-content">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/catalogue" element={<Catalogue />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/product/:productId" element={<Product />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route
+            path="/password"
+            element={
+              <Password setIsPasswordProtected={setIsPasswordProtected} />
+            }
+          />
+        </Routes>
+      </div>
+    </div>
+  );
+}
 
 function App() {
   return (
     <CartProvider>
-      {" "}
-      {/* Wrap the app in the CartProvider */}
       <Router>
-        <div className="App">
-          <Header />
-          <div className="main-content">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/catalogue" element={<Catalogue />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/product/:id" element={<Product />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/cart" element={<Cart />} />
-            </Routes>
-          </div>
-          <Footer />
-        </div>
+        <AppContent />
       </Router>
     </CartProvider>
   );

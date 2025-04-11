@@ -12,7 +12,7 @@ const Shop = () => {
 
   return (
     <div className="shop-container">
-      <div className="product-list">
+      <div className="product-list-shop">
         {productData.map((product) => (
           <div key={product.id} className="product-card">
             {product.images && product.images[0] ? (
