@@ -13,7 +13,7 @@ const Password = ({ setIsPasswordProtected }) => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Set to false by default
   const form = useRef();
 
   useEffect(() => {
@@ -53,7 +53,8 @@ const Password = ({ setIsPasswordProtected }) => {
     event.preventDefault();
     if (password === "your-password") {
       setIsPasswordProtected(false);
-      navigate("/");
+      localStorage.setItem("isPasswordProtected", "false");
+      navigate("/", { replace: true });
     } else {
       setError("Incorrect password");
     }
@@ -93,9 +94,9 @@ const Password = ({ setIsPasswordProtected }) => {
           />
           <input type="submit" id="button" value="enlist" />
         </form>
-        <button className="lock-icon" onClick={() => setIsModalOpen(true)}>
+        {/* <button className="lock-icon" onClick={() => setIsModalOpen(true)}>
           🔒
-        </button>
+        </button> */}
       </div>
 
       {isModalOpen && (

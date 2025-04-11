@@ -25,7 +25,7 @@ function AppContent() {
   const isHomePage = location.pathname === "/";
   const isPasswordPage = location.pathname === "/password";
   const [isCartSidebarOpen, setIsCartSidebarOpen] = useState(false);
-  const [isPasswordProtected, setIsPasswordProtected] = useState(false); // Set to true to enable password protection
+  const [isPasswordProtected, setIsPasswordProtected] = useState(true); // Set to true to enable password protection
 
   // If password protection is enabled and user is not on password page, redirect to password page
   if (isPasswordProtected && !isPasswordPage) {
