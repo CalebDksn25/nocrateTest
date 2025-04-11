@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
-import { CartContext } from "/Users/calebdickson/Desktop/noreact/main/src/utils/CartContext.js";
+import { CartContext } from "../../utils/CartContext.js";
 import "./cartSidebar.css";
 
 const CartSidebar = ({ isOpen, onClose }) => {
