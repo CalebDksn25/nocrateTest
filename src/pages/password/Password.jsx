@@ -92,7 +92,7 @@ const Password = ({ setIsPasswordProtected }) => {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <input type="submit" id="button" value="enlist" />
+          <input type="submit" id="button" value="join" />
         </form>
         {/* <button className="lock-icon" onClick={() => setIsModalOpen(true)}>
           🔒
