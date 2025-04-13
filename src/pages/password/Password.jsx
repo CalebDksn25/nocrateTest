@@ -93,9 +93,9 @@ const Password = ({ setIsPasswordProtected }) => {
           />
           <input type="submit" id="button" value="join" />
         </form>
-        <button className="lock-icon" onClick={() => setIsModalOpen(true)}>
+        {/*<button className="lock-icon" onClick={() => setIsModalOpen(true)}>
           🔒
-        </button>
+        </button>*/}
       </div>
 
       {isModalOpen && (
