@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import emailjs from "emailjs-com";
 import "./password.css";
@@ -6,32 +6,31 @@ import nocratePants from "../../assets/nocratePants.JPG";
 import nocratetext from "../../assets/nocratetext3.png";
 //import nocrateLogo from "../../assets/nocratelogo.png";
 
-emailjs.init("a2C2aNm80o4a9f5-T"); // Initialize with your user ID
+emailjs.init("PyZS0Oomf_pfm3KKM");
 
 const Password = ({ setIsPasswordProtected }) => {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false); // Set to false by default
-  const form = useRef();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    const formElement = document.getElementById("form");
     const btn = document.getElementById("button");
+    const form = document.getElementById("form");
 
-    const handleSubmit = (event) => {
+    const handleSubmit = function (event) {
       event.preventDefault();
+
       btn.value = "Sending...";
 
-      const serviceID = "default_service";
-      const templateID = "template_m68n72y";
+      const serviceID = "service_6pdslxm";
+      const templateID = "template_slgv3bp";
 
-      emailjs.sendForm(serviceID, templateID, formElement).then(
+      emailjs.sendForm(serviceID, templateID, this).then(
         () => {
           btn.value = "Send Email";
           alert("Sent!");
-          form.current.reset();
           setEmail("");
         },
         (err) => {
@@ -41,13 +40,13 @@ const Password = ({ setIsPasswordProtected }) => {
       );
     };
 
-    formElement.addEventListener("submit", handleSubmit);
+    form.addEventListener("submit", handleSubmit);
 
-    // Cleanup function to remove the event listener
     return () => {
-      formElement.removeEventListener("submit", handleSubmit);
+      // Proper cleanup of the event listener
+      form.removeEventListener("submit", handleSubmit);
     };
-  }, []); // Empty dependency array ensures this runs only once
+  }, []); // Empty dependency array ensures this only runs once
 
   const handlePasswordSubmit = (event) => {
     event.preventDefault();
@@ -83,7 +82,7 @@ const Password = ({ setIsPasswordProtected }) => {
           <br />
           email list open now
         </p>
-        <form id="form" ref={form} className="email-form">
+        <form id="form" className="email-form">
           <input
             type="email"
             name="email"
@@ -94,9 +93,9 @@ const Password = ({ setIsPasswordProtected }) => {
           />
           <input type="submit" id="button" value="join" />
         </form>
-        {/* <button className="lock-icon" onClick={() => setIsModalOpen(true)}>
+        <button className="lock-icon" onClick={() => setIsModalOpen(true)}>
           🔒
-        </button> */}
+        </button>
       </div>
 
       {isModalOpen && (
